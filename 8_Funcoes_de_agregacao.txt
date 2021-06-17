@@ -1,0 +1,40 @@
+Funções de agregação
+
+Na SQL existem algumas funções que agrupam
+valores.
+São elas:
+COUNT: conta a quantidade de linhas
+AVG: realiza a média aritmética da coluna
+SUM: soma os valores da coluna
+MIN: retorna o menor valor da coluna
+MAX: retorna o maior valor da coluna
+
+
+ID Nome      Valor Quantidade
+1  Lápis     1,00    10
+2  Borracha  3,00    10
+3  Caderno  15,00    10
+
+SELECT COUNT(*) AS QTD FROM ITEM;
+
+SELECT MIN(ID) AS menor FROM ITEM;
+
+SELECT MAX(ID) AS maior FROM ITEM;
+
+SELECT AVG(VALOR) as media FROM ITEM;
+
+SELECT SUM (valor * quantidade) as ValorTotal FROM ITEM;
+
+Agrupando valores
+
+As funções de agregação também podem agrupar
+os valores de acordo com determinadas colunas.
+
+Uma característica muito importante do SQL é o poder de agrupar 
+linhas com base em valores de determinadas colunas. Dessa forma,
+não estaremos trabalhando na pesquisa em todas as linhas da tabela, 
+como fizemos anteriormente, mas sim em grupos menores. Para isso, 
+utilizamos as funções de grupo já mostradas, com a cláusula GRUPO BY 
+no comando SELECT. A cláusula GRUPO BY  deve vir antes da cláusula ORDER BY
+e depois do WHERE (se houver necessidade de utilizá-los).
+

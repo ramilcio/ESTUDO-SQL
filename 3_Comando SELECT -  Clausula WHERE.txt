@@ -1,0 +1,30 @@
+/*
+SELECT simples
+O comando SELECT permite recuperar os dados de um objeto do banco de dados, 
+como uma tabela, view e, em alguns casos, uma stored procedure (alguns bancos
+ de dados permitem a criação de procedimentos que retornam valor). A sintaxe
+ mais básica do comando é:
+*/
+
+SELECT <lista_de_campos>
+FROM <nome_da_tabela></nome_da_tabela></lista_de_campos>
+
+--Exemplo
+
+SELECT CODIGO, NOME FROM CLIENTES
+SELECT * FROM CLIENTES
+
+/*
+COMANDO WHERE
+
+A cláusula Where permite ao comando SQL passar condições de filtragem.
+*/
+
+SELECT CODIGO, NOME FROM CLIENTES
+WHERE CODIGO = 10
+SELECT CODIGO, NOME FROM CLIENTES
+WHERE UF = ‘RJ’
+SELECT CODIGO, NOME FROM CLIENTES
+WHERE CODIGO >= 100 AND CODIGO <= 500
+SELECT CODIGO, NOME FROM CLIENTES
+WHERE UF = ‘MG’ OR UF = ‘SP’
