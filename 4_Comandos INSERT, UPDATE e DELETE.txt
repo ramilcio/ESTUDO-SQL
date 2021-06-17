@@ -1,0 +1,65 @@
+Comandos INSERT, UPDATE e DELETE
+
+Inserindo dados: INSERT SQL
+O comando para inclusão no banco de dados é o INSERT, que possui a seguinte estrutura apresentada
+
+NSERT INTO nome_tabela (lista-de-campos)
+VALUES (lista_dados)
+--OU
+INSERT INTO nome_tabela  VALUES (lista_dados)
+
+CREATE TABLE empregados
+(
+CODIGO INT,
+NOME   VARCHAR(50)
+SALARIO DECIMAL(10,2)
+SECAO INT
+)
+
+EXEMPLO:
+
+INSERT INTO empregados(CODIGO, NOME, SALARIO, SECAO)
+VALUES(1, "HELBERT CARVALHO", 1.500, 3)
+
+INSERT INTO empregados(CODIGO, NOME, SALARIO, SECAO)
+VALUES(2, "ANA MARIA", 3.700, 4)
+
+INSERT INTO empregados(CODIGO, NOME, SALARIO, SECAO)
+VALUES(3, "MARTA SILVA", 3.700, 5)
+
+
+Atualizando dados: UPDATE SQL
+O comando para atualizar registros é UPDATE, que tem a seguinte sintaxe:
+
+UPDATE nome_tabela
+SET CAMPO = "novo_valor"
+WHERE CONDIÇÃO
+
+EXEMPLO 1:
+UPDATE empregados
+SET SALARIO = 30000
+WHERE SECAO = 4
+
+EXEMPLO 2:
+UPDATE empregados
+SET NOME = "ALBERTO CARVALHO",SALARIO = 27000
+WHERE CODIGO = 1
+
+Removendo dados: DELETE SQL
+O comando utilizado para apagar dados é o DELETE.
+
+DELETE FROM nome_tabela
+WHERE condição
+
+DELETE FROM empregados
+WHERE CODIGO = 1
+
+
+
+
+
+
+
+
+
+
