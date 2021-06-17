@@ -38,3 +38,11 @@ utilizamos as funções de grupo já mostradas, com a cláusula GRUPO BY
 no comando SELECT. A cláusula GRUPO BY  deve vir antes da cláusula ORDER BY
 e depois do WHERE (se houver necessidade de utilizá-los).
 
+SELECT coluna1, SUM(coluna2)
+FROM nome_tabela
+WHERE coluna1 = condicao
+GROUP BY coluna1 
+
+No código acima estamos fazendo uma soma da coluna2 e agrupando essa soma pela coluna1. Importante: Operações 
+de agregação tais como as que expomos na tabela acima, não podem ser agrupadas no GROUP BY. Para exemplificar,
+vamos considerar a tabela “pessoas” da nossa base de dados de exemplo:

@@ -1,0 +1,63 @@
+USE ESTUDO_SQL
+
+TABELA tb_func
+
+1. Usando o GROUP BY com COUNT
+
+SELECT uf, COUNT(codfunc)
+FROM tb_func
+GROUP BY uf
+No código acima estamos contando quantos registros existem na tabela “pessoas” agrupados pelo campo uf:
+
+2. Usando o GROUP BY com SUM
+SELECT uf, SUM(salario)
+FROM tb_func
+GROUP BY uf
+Já no exemplo acima, estamos somando os salários de todas as pessoas, agrupando-as por UF:
+
+
+3. Usando o GROUP BY com AVG
+SELECT uf, AVG(salario)
+FROM tb_func
+GROUP BY uf
+Já no exemplo acima, tirando a média os salários de todas as pessoas, agrupando-as por UF:
+
+
+4. Usando o GROUP BY com MIN e MAX
+SELECT uf, MIN(salario), MAX(salario)
+FROM tb_func
+GROUP BY uf
+Já neste exemplo, estamos extraindo o salario mínima e a máxima das pessoas que compartilham o mesmo UF:
+
+5. Agrupando mais de uma coluna
+É possível agrupar mais de uma coluna no GROUP BY, inclusive com operações de agregação diferentes, como mostra o exemplo abaixo:
+
+SELECT uf, sexo, avg(salario) AS media_salario, count(codfunc) AS total_pessoas
+FROM tb_func
+GROUP BY uf, sexo
+
+6. Usando o HAVING para filtrar resultados após o GROUP BY
+A cláusula HAVING é parecida com a cláusula WHERE, a diferença é que o HAVING é usado para filtrar valores após o GROUP BY. Para exemplificar:
+
+SELECT uf, COUNT(codfunc)
+FROM tb_func
+WHERE sexo = 'Masculino'
+GROUP BY uf
+No código acima estamos contando a quantidade de pessoas por UF, cujo sexo seja masculino:
+
+á no código abaixo, ao acrescentar o HAVING, estamos eliminando desse resultado todas as linhas cujo resultado do COUNT seja menor que 2 pessoas:
+
+SELECT uf, COUNT(codfunc)
+FROM tb_func
+WHERE sexo = 'Masculino'
+GROUP BY uf
+HAVING COUNT(*) >= 2
+
+
+
+
+
+
+
+
+
