@@ -1,0 +1,150 @@
+Expressão CASE
+
+Ao ser utilizada a cláusula CASE em comandos SQL é possível economizar diversas linhas de código,
+ pois não é necessário criar blocos de programação para testar condições.
+ 
+  Expressão Case simples:
+  CASE input_expression
+       WHEN when_expression THEN result_expression [ ...n ]
+       [ ELSE else_result_expression ]
+  END
+  
+  Exemplos de utilização de expressões CASE
+  
+  Criando a Tabela OrdemServico.
+  
+  CREATE TABLE OrdemServico (
+  ID int identity,
+  OrdemData date,
+  OrdemValor decimal(10,2),
+  Pago char(1));
+  
+  
+ INSERT into OrdemServico VALUES
+ ('12-03-2014', 10.49, NULL),
+ ('10-05-2014', 220.45,'S'),
+ ('14-06-2012', 8.62, NULL),
+ ('04-02-2012', 75.39, NULL),
+ ('07-11-2013', 125.54, NULL),
+ ('25-04-2008', 99.99, NULL),
+ ('11-09-2013', 320.13, 'N'),
+ ('04-05-2010', 175.76, NULL),
+ ('27-03-2011', 1.69, NULL);
+  
+  SELECT * FROM OrdemServico
+  
+  Usando uma expressão CASE simples com cláusulas WHEN e ELSE
+  
+  SELECT YEAR(OrdemData) AS OrdemAno,
+         CASE YEAR(OrdemData)
+                                   WHEN 2014 THEN 'Ano 1'
+                                   WHEN 2013 THEN 'Ano 2'
+                                   WHEN 2012 THEN 'Ano 3'
+                                   ELSE 'Ano 4 e posteriores' END AS TipoAno
+  FROM OrdemServico;
+  
+  
+  
+  Usando uma expressão simples CASE sem o ELSE
+  
+  SELECT YEAR(OrdemData) AS OrdemAno,
+         CASE YEAR(OrdemData)
+                                   WHEN 2014 THEN 'Ano 1'
+                                   WHEN 2013 THEN 'Ano 2'
+                                   WHEN 2012 THEN 'Ano 3' END AS TipoAno
+  FROM OrdemServico;
+  
+  
+  
+Usando uma expressão CASE Searched
+A expressão simples do CASE com as cláusulas WHEN foi avaliada com base 
+no operador de igualdade. Já no caso das expressões CASE do tipo searched, 
+podemos fazer uso de outros operadores e a sintaxe da expressão CASE será 
+um pouco diferente.
+
+ SELECT YEAR(OrdemData) AS OrdemAno,
+         CASE
+                                   WHEN YEAR(OrdemData) = 2014 THEN 'Ano 1'
+                                   WHEN YEAR(OrdemData) = 2013 THEN 'Ano 2'
+                                   WHEN YEAR(OrdemData) = 2012 THEN 'Ano 3'
+                                   WHEN YEAR(OrdemData) < 2012 THEN 'Ano 4 e posteriores' END AS TipoAno
+  FROM OrdemServico;
+
+
+Declarando um CASE aninhado.
+
+SELECT OrdemValor,
+         CASE
+                                   WHEN OrdemValor < 200 THEN 'Ordem abaixo de 200 Reais'
+                                   WHEN OrdemValor < 300 THEN 'Ordem abaixo de 300 Reais'
+                                   WHEN OrdemValor < 500 THEN
+                                                  CASE
+                                                                 WHEN Pago = 'S'
+                                                                     THEN 'Ordem acima de 300 Reais sem estar Pago'
+                                                                     ELSE 'Ordem de 300 Reais como Pago' END
+                                   ELSE
+                                                  CASE
+                                                                 WHEN Pago = 'N'
+                                                                     THEN 'Ordem de 500 Reais sem estar como Pago'
+                                                                     ELSE 'Ordem acima de 500 Reais estando como Pago' END
+                                       END AS Categoria_OrdemValor
+  FROM OrdemServico;
+  
+  O código apresentado acima é semelhante ao que apresentamos na Listagem 7,
+  a única diferença é que adicionamos uma expressão CASE a mais para ver se um determinado 
+  pedido na tabela OrdemServico foi comprado utilizando a opção Pago ou não, o que só é
+  permitido em compras acima de 300 Reais. Tenham em mente que quando temos expressões
+  CASE aninhadas, só são permitidos até 10 níveis de aninhamento no SQL Server.
+  
+  
+  
+								 
+								 
+Expressões  IIF								 
+					
+A função IIF pode ser considerado um atalho para a instrução CASE. 
+
+Sintaxe da expressão IIF.
+
+IIF ( boolean_expression, true_value, false_value )
+
+Exemplo utilizando a expressão IIF.
+
+use Testes;
+  SELECT OrdemValor,
+                    IIF(OrdemValor > 200,
+                                  'Acima do valor',
+                                  'Abaixo do valor') AS OrdemTipe
+  FROM OrdemServico;
+
+
+Exemplo da função IIF aninhada.
+
+SELECT OrdemValor,
+         IIF (OrdemValor < 130,
+                          'Abaixo de 130',
+                          (IIF (OrdemValor < 200,
+                                          'Abaixo de 200',
+                                (IIF (OrdemValor < 300,
+                                       (IIF (Pago = 'N',
+                                                 'Ordem de 200 Sem ser como Pago',
+                                                 'Ordem de 200 como  Pago'
+                                             )
+                                        ),
+                                                  (IIF (Pago = 'N',
+                                                             'Ordem de 300 Sem ser como Pago',
+                                                             'Ordem de 300 como Pago'
+                                                       )
+                                                   )
+                                                              )
+                                                              )
+                                                              )
+                                                              )
+                                 ) AS Categoria_OrdemValor
+  FROM OrdemServico;
+
+
+					
+  
+  
+  

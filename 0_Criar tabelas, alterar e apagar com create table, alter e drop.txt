@@ -1,0 +1,56 @@
+
+Trabalhar com as estruturas das tabelas basicamente envolve três operações: 
+Criar, alterar ou excluir a tabela. No processo de alteração ocorre ainda outra divisão, 
+ou seja, a alteração envolve incluir campos, alterar ou remover um ou mais campos da tabela.
+
+Criar tabela com create table
+Para criar tabelas em um banco de dados, usamos o comando create table.
+
+Exemplo:
+
+CREATE TABLE empregados (
+codigo_empregado int identity primary key,
+nome varchar(60),
+data_nascimento datetime,
+salario decimal(10,2),
+cidade varchar(60),
+estado varchar(30)
+)
+
+Alterar tabela com alter table
+Uma vez criada, uma tabela poderá sofrer alterações em sua estrutura, 
+para realizar essas alterações usamos o comando ALTER TABLE.
+
+As alterações na estrutura da tabela podem ser para:
+
+Adicionar um campo
+Alterar um campo
+Remover um campo
+Adicionar um campo
+Vamos adicionar o campo sexo na tabela empregados criada no post anterior.
+
+ALTER TABLE empregados ADD sexo varchar(10)
+
+Alterar um campo
+Para alterar o campo sexo já existente, usamos a condição MODIFY COLUMN. Exemplo:
+
+ALTER TABLE empregados ALTER COLUMN sexo varchar(30)
+Podemos alterar o tipo e o tamanho, mas não o nome do campo. Veja ainda outro exemplo 
+onde estaremos alterando o tipo de dados do campo cpf.
+
+ALTER TABLE empregados ALTER COLUMN cpf int
+
+
+
+Remover um campo
+Para excluir um campo usamos a condição DROP COLUMN. Exemplo:
+
+ALTER TABLE empregados DROP COLUMN sexo
+ou ainda
+
+ALTER TABLE empregados DROP COLUMN cpf,rg
+Apagar tabela com drop table
+Para excluir uma tabela do nosso banco de dados, usamos o comando DROP TABLE como no exemplo a seguir.
+
+DROP TABLE empregados
+Ao excluir uma tabela todos os dados serão excluídos, naturalmente.
