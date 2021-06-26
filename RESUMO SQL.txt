@@ -1,0 +1,160 @@
+--comando SELECT
+O comando SELECT permite recuperar os dados de um objeto do banco de dados, 
+como uma tabela, view e, em alguns casos, uma stored procedure 
+alguns bancos de dados permitem a criação de procedimentos que retornam valor).
+A sintaxe mais básica do comando é:
+
+SELECT <lista_de_campos>
+FROM <nome_da_tabela></nome_da_tabela></lista_de_campos>
+
+Exemplo:
+
+SELECT CODIGO, NOME FROM CLIENTES
+SELECT * FROM CLIENTES
+
+--COMANDO WHERE
+A cláusula Where permite ao comando SQL passar condições de filtragem.
+
+Exemplo:
+
+SELECT CODIGO, NOME FROM CLIENTES
+WHERE CODIGO = 10
+
+SELECT CODIGO, NOME FROM CLIENTES
+WHERE UF = ‘RJ’
+
+SELECT CODIGO, NOME FROM CLIENTES
+WHERE CODIGO >= 100 AND CODIGO <= 500
+
+SELECT CODIGO, NOME FROM CLIENTES
+WHERE UF = ‘MG’ OR UF = ‘SP’
+
+--FILTRO DE TEXTO
+Para busca parcial de string, o SELECT fornece o operador LIKE.
+
+Exemplo:
+SELECT CODIGO, NOME FROM CLIENTES
+WHERE NOME LIKE ‘MARIA%’
+
+SELECT CODIGO, NOME FROM CLIENTES
+WHERE NOME LIKE ‘%MARIA%’
+
+--ORDENAÇÃO
+SELECT CODIGO, NOME FROM CLIENTES
+ORDER BY NOME
+
+SELECT CODIGO, NOME FROM CLIENTES
+ORDER BY UF, NOME
+
+A utilização da palavra DESC garante a ordenação invertida:
+
+SELECT CODIGO, NOME FROM CLIENTES
+ORDER BY NOME DESC
+
+SELECT CODIGO, NOME FROM CLIENTES
+ORDER BY UF DESC
+
+--COMANDO JOIN
+
+INNER: Semelhante ao uso do operador “=” na junção de tabelas. 
+Aqui os registros sem correspondências não são incluídos. Esta 
+cláusula é opcional e pode ser omitida no comando JOIN.
+
+OUTER: Os registros que não se relacionam também são exibidos. 
+Neste caso, é possível definir qual tabela será incluída na seleção,
+mesmo não tendo correspondência.
+
+Exemplo:
+
+SELECT A.CODIGO, A.DESCRICAO, B.DESCRICAO, B.QTD
+FROM PRODUTOS A
+INNER JOIN COMPONENTES B
+ON (A.CODIGO = B.CODPRODUTO)
+
+SELECT A.CODIGO, A.DESCRICAO, B.DESCRICAO, B.QTDE
+FROM PRODUTOS A
+LEFT OUTER JOIN COMPONENTES B
+ON (A.CODIGO = B.CODPRODUTO)
+
+SELECT A.CODIGO, A.DESCRICAO, B.DESCRICAO
+FROM COMPONENTES A
+RIGHT OUTER JOIN PRODUTOS B
+ON (A.CODIGO = B.CODPRODUTO)
+
+--UNION
+Existe ainda uma segunda forma de juntar tabelas com o comando SELECT.
+Através do parâmetro UNION, é possível colar o conteúdo de duas tabelas.
+
+SELECT CODIGO, NOME FROM CLIENTES
+UNION
+SELECT CODIGO. NOME FROM FUNCIONARIOS
+
+Por default, os registros duplicados são eliminados na cláusula UNION. 
+No exemplo anterior, se tivéssemos um cliente com o mesmo nome e código
+de um funcionário, apenas o registro da primeira tabela seria exibido.
+Para incluir todos os registros, independente de duplicidade, utilize a palavra ALL:
+
+SELECT CODIGO, NOME FROM CLIENTES
+UNION ALL
+SELECT CODIGO, NOME FROM FUNCIONARIOS
+
+
+--FUNÇÕES DE AGRUPAMENTO
+
+AVG: Retorna a média do campo especificado
+SELECT AVG(VALOR) FROM PEDIDOS
+MIN/MAX/SUM: Respectivamente retorna o menor valor, o maior e o somatório de um grupo de registros:
+SELECT MIN(VALOR) FROM PEDIDOS
+SELECT MAX(VALOR) FROM PEDIDOS
+SELECT AVG(VALOR) FROM PEDIDOS
+COUNT: Retorna a quantidade de itens da seleção
+
+--AGRUPAMENTO
+Um recurso do comando SELECT é o parâmetro GROUPY BY.
+Através dele podemos retornar informações agrupadas de um conjunto
+de registros, estabelecendo uma condição de agrupamento.
+É um recurso muito utilizado na criação de relatórios.
+
+SELECT CODCLIENTE, MAX(VALOR)
+FROM PEDIDOS
+GROUP BY CODCLIENTE
+
+SELECT CODCLIENTE, COUNT(*)
+FROM PEDIDOS
+GROUPY BY CODCLIENTE
+
+--HAVING
+Através do comando HAVING podemos filtrar a cláusula GROUP BY.
+
+SELECT CODCLIENTE, COUNT(*)
+FROM PEDIDOS
+GROUPY BY CODCLIENTE
+HAVING COUNT(*) >= 2
+
+Somente os clientes com 2 ou mais pedidos serão selecionados.
+Repare que o HAVING é utilizado, geralmente com alguma função de agrupamento.
+
+SELECT CODCLIENTE, COUNT(*)
+FROM PEDIDOS
+WHERE DATA > ‘06/10/2002’
+GROUPY BY CODCLIENTE
+HAVING COUNT(*) >= 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
